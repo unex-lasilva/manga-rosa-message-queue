@@ -66,7 +66,7 @@ public class MessageBroker {
                         .getAllNotConsumedMessagesByTopic(key);
 
                 if(Objects.nonNull(messages)){
-
+                    
                 }
             });
         };

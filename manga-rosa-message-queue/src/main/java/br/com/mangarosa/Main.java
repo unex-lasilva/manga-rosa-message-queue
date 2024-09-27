@@ -1,5 +1,7 @@
 package br.com.mangarosa;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 
 import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
@@ -17,7 +19,6 @@ public class Main {
 
         // String[] array = linkedList.toArray();
 
-        System.out.println(linkedList.iterator());
-
+        System.out.println(LocalDateTime.now());
     }
 }

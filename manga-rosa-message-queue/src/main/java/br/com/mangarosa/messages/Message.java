@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Messagem para ser processada
  */
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
     private String id;
     private Producer producer;
@@ -99,7 +99,6 @@ public class Message implements Serializable {
         if(message == null || message.isBlank() || message.isEmpty())
             throw new IllegalArgumentException("The message content can't be null or empty or blank");
         this.message = message;
-
     }
 
     /**
@@ -123,5 +122,12 @@ public class Message implements Serializable {
             }
         }
         return map;
+    }
+
+
+    @Override
+    public int compareTo(Message o) {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }
