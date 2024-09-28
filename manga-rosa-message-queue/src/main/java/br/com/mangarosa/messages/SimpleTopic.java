@@ -9,18 +9,17 @@ import br.com.mangarosa.messages.interfaces.Topic;
 
 public class SimpleTopic implements Topic {
     private LinkedQueue<Message> Queue;
-    private String name;
+    private String topicName;
 
     public SimpleTopic(String name) {
         this.Queue = new LinkedQueue<>(Message.class);
-        this.name = name;
+        this.topicName = name;
 
     }
 
     @Override
     public void addMessage(Message message) {
         this.Queue.enqueue(message);
-
     }
 
     @Override
@@ -37,8 +36,7 @@ public class SimpleTopic implements Topic {
 
     @Override
     public String name() {
-
-        return null;
+        return this.topicName;
     }
 
     @Override

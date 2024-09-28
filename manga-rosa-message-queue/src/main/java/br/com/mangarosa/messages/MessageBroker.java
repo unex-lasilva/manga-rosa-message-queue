@@ -29,6 +29,7 @@ public class MessageBroker {
         if(topics.containsKey(topic.name()))
             throw new IllegalArgumentException("The topic name already exists");
         this.topics.put(topic.name(), topic);
+
     }
 
     public void removeTopic(String topic){
