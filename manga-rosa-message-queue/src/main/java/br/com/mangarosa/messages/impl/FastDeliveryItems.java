@@ -11,7 +11,7 @@ import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Topic;
 
 public class FastDeliveryItems implements Topic {
-    private Queue<Message> queue;
+    public Queue<Message> queue;
     private final List<Consumer> consumers;
     private MessageRepository messageRepository;
 

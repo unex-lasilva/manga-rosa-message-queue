@@ -11,6 +11,7 @@ import br.com.mangarosa.messages.interfaces.Topic;
 public class Repository implements MessageRepository {
 
     public Map<String, Topic> topics;
+    
 
     @Override
     public void append(String topic, Message message) {
@@ -21,7 +22,9 @@ public class Repository implements MessageRepository {
 
     @Override
     public void consumeMessage(String topic, UUID messageId) {
-
+        Message message;
+        if()
+        
     }
 
     @Override

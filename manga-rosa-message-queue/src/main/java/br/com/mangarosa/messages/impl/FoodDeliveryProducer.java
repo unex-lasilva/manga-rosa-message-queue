@@ -5,17 +5,16 @@ import br.com.mangarosa.messages.MessageBroker;
 import br.com.mangarosa.messages.interfaces.Producer;
 import br.com.mangarosa.messages.interfaces.Topic;
 
-public class FastDeliveryProducer implements Producer {
+public class FoodDeliveryProducer implements Producer {
 
     MessageBroker broker;
     Repository repository;
     Message message;
     Topic topic;
 
-    public FastDeliveryProducer(MessageBroker broker, Repository repository ) {
+    public FoodDeliveryProducer(MessageBroker broker, Repository repository) {
         this.broker = broker;
         this.repository = repository;
-        
     }
 
     @Override
@@ -32,15 +31,15 @@ public class FastDeliveryProducer implements Producer {
 
     @Override
     public void sendMessage(String message) {
-        this.message = new Message(this , message);
-        this.repository.append(this.topic.name(), this.message);
+        this.message = new Message(this, message);
+        this.repository.append(name(), this.message);
         this.broker.notifyConsumers();
 
     }
 
     @Override
     public String name() {
-        return "FastDeliveryProducer";
+        return "FoodDeliveryProducer";
     }
 
 }
