@@ -1,7 +1,6 @@
 package br.com.mangarosa.datastructures.interfaces.impl;
 
 import java.lang.reflect.Array;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
