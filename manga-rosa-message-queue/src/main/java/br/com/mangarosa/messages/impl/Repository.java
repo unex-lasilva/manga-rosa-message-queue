@@ -1,42 +1,73 @@
 package br.com.mangarosa.messages.impl;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+import br.com.mangarosa.datastructures.interfaces.Queue;
+import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
 import br.com.mangarosa.messages.Message;
 import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Topic;
 
 public class Repository implements MessageRepository {
 
-    public Map<String, Topic> topics;
+    public Map<String, Queue<Message>> Queues = new HashMap<>();
     
 
     @Override
     public void append(String topic, Message message) {
-        if (this.topics.containsKey(topic)) {
-            this.topics.get(topic).addMessage(message);
-        };
+        if (this.Queues.containsKey(topic)) {
+            this.Queues.get(topic).enqueue(message);
+        }else{
+            this.Queues.put(topic, new LinkedQueue<>(Message.class));
+            this.Queues.get(topic).enqueue(message);
+        }
     }
 
     @Override
     public void consumeMessage(String topic, UUID messageId) {
-        Message message;
-        if()
+        if(this.Queues.get(topic).peek().getId() == messageId.toString()){
+            this.Queues.get(topic).dequeue();
+        };
         
     }
 
     @Override
     public List<Message> getAllNotConsumedMessagesByTopic(String topic) {
+        if(!this.Queues.containsKey(topic))
+        throw new NoSuchElementException("Key " + topic + " not found in the map.");
         
-        return null;
+        List<Message> listMessages = Arrays.asList(this.Queues.get(topic).toArray());
+        List<Message> listMessagesNotConsumed = new ArrayList<>();
+        for(Message message: listMessages){
+            if(!message.isConsumed()){
+                listMessagesNotConsumed.add(message);
+            }
+        }
+        
+        return listMessagesNotConsumed;
     }
 
     @Override
     public List<Message> getAllConsumedMessagesByTopic(String topic) {
-        return null;
-
+        if(!this.Queues.containsKey(topic))
+        throw new NoSuchElementException("Key " + topic + " not found in the map.");
+        
+        List<Message> listMessages = Arrays.asList(this.Queues.get(topic).toArray());
+        List<Message> listMessagesConsumed = new ArrayList<>();
+        for(Message message: listMessages){
+            if(message.isConsumed()){
+                listMessagesConsumed.add(message);
+            }
+        }
+        
+        return listMessagesConsumed;
     }
 
 }

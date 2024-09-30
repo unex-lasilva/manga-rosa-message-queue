@@ -11,14 +11,12 @@ import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Topic;
 
 public class FastDeliveryItems implements Topic {
-    public Queue<Message> queue;
     private final List<Consumer> consumers;
     private MessageRepository messageRepository;
 
     public FastDeliveryItems(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
         this.consumers = new ArrayList<>();
-        this.queue = new LinkedQueue<>(Message.class);
     }
 
     @Override
@@ -29,7 +27,6 @@ public class FastDeliveryItems implements Topic {
     @Override
     public void addMessage(Message message) {
         messageRepository.append(name(), message);
-        this.queue.enqueue(message);
     }
 
     @Override

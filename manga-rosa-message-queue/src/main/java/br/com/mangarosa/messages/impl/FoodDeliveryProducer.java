@@ -2,17 +2,18 @@ package br.com.mangarosa.messages.impl;
 
 import br.com.mangarosa.messages.Message;
 import br.com.mangarosa.messages.MessageBroker;
+import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Producer;
 import br.com.mangarosa.messages.interfaces.Topic;
 
 public class FoodDeliveryProducer implements Producer {
 
     MessageBroker broker;
-    Repository repository;
+    MessageRepository repository;
     Message message;
     Topic topic;
 
-    public FoodDeliveryProducer(MessageBroker broker, Repository repository) {
+    public FoodDeliveryProducer(MessageBroker broker, MessageRepository repository) {
         this.broker = broker;
         this.repository = repository;
     }
@@ -21,7 +22,6 @@ public class FoodDeliveryProducer implements Producer {
     public void addTopic(Topic topic) {
         this.broker.createTopic(topic);
         this.topic = topic;
-        this.repository.topics.put(topic.name(), topic);
     }
 
     @Override
@@ -32,9 +32,8 @@ public class FoodDeliveryProducer implements Producer {
     @Override
     public void sendMessage(String message) {
         this.message = new Message(this, message);
-        this.repository.append(name(), this.message);
+        this.repository.append(this.topic.name(), this.message);
         this.broker.notifyConsumers();
-
     }
 
     @Override
