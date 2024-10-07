@@ -5,11 +5,13 @@ import br.com.mangarosa.messages.interfaces.Producer;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Messagem para ser processada
@@ -19,6 +21,8 @@ public class Message implements Serializable, Comparable<Message> {
     private String id;
     private Producer producer;
     private final LocalDateTime createdAt;
+    private final Duration timeToLive;
+    
     private final List<MessageConsumption> consumptionList;
     private boolean isConsumed;
     private String message;
@@ -27,6 +31,8 @@ public class Message implements Serializable, Comparable<Message> {
         setProducer(producer);
         setMessage(message);
         this.createdAt = LocalDateTime.now();
+        this.timeToLive = Duration.ofMinutes(1);
+        this.id = createdAt + "-" + UUID.randomUUID().toString();
         this.consumptionList = new ArrayList<>();
     }
 
@@ -36,7 +42,7 @@ public class Message implements Serializable, Comparable<Message> {
      * @return o id da mensagem
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -69,6 +75,19 @@ public class Message implements Serializable, Comparable<Message> {
      */
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    /**
+     * Verifica se a mensagem foi expirada
+     * retornando true se o horário atual 
+     * passou do horário de criação da mensagem 
+     * somado ao tempo de vida da mensagem;
+     *  */ 
+    public boolean  isExperied(){
+
+        LocalDateTime now = LocalDateTime.now();
+
+        return now.isAfter(this.createdAt.plus(timeToLive));
     }
 
     /**

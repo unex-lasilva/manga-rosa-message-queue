@@ -1,4 +1,4 @@
-package br.com.mangarosa.messages.impl;
+package br.com.mangarosa.messages.impl.producers;
 
 import br.com.mangarosa.messages.Message;
 import br.com.mangarosa.messages.MessageBroker;
@@ -6,14 +6,13 @@ import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Producer;
 import br.com.mangarosa.messages.interfaces.Topic;
 
-public class FoodDeliveryProducer implements Producer {
-
+public class PyMarketPlaceProducer implements Producer {
     MessageBroker broker;
     MessageRepository repository;
     Message message;
     Topic topic;
 
-    public FoodDeliveryProducer(MessageBroker broker, MessageRepository repository) {
+    public PyMarketPlaceProducer(MessageBroker broker, MessageRepository repository) {
         this.broker = broker;
         this.repository = repository;
     }
@@ -38,7 +37,6 @@ public class FoodDeliveryProducer implements Producer {
 
     @Override
     public String name() {
-        return "FoodDeliveryProducer";
+        return "PyMarketPlaceProducer";
     }
-
 }

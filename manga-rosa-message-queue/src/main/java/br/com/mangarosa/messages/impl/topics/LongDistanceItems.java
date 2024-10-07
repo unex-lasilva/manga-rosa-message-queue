@@ -1,27 +1,25 @@
-package br.com.mangarosa.messages.impl;
+package br.com.mangarosa.messages.impl.topics;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mangarosa.messages.Message;
-import br.com.mangarosa.datastructures.interfaces.Queue;
-import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
 import br.com.mangarosa.messages.interfaces.Consumer;
 import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.Topic;
 
-public class FastDeliveryItems implements Topic {
+public class LongDistanceItems implements Topic {
     private final List<Consumer> consumers;
     private MessageRepository messageRepository;
 
-    public FastDeliveryItems(MessageRepository messageRepository) {
+    public LongDistanceItems(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
         this.consumers = new ArrayList<>();
     }
 
     @Override
     public String name() {
-        return "queue/fast-delivery-items";
+        return "queue/long-distance-items";
     }
 
     @Override
@@ -48,5 +46,4 @@ public class FastDeliveryItems implements Topic {
     public MessageRepository getRepository() {
         return this.messageRepository;
     }
-
 }
