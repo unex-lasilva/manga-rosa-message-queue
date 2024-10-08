@@ -37,6 +37,6 @@ public class FastDeliveryProducer implements Producer {
 
     @Override
     public String name() {
-        return "PhysicPersonDeliveryProducerr";
+        return "PhysicPersonDeliveryProducer";
     }
 }
