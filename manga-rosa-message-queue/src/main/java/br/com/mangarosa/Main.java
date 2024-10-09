@@ -20,13 +20,16 @@ public class Main {
         MessageRepository repository = new Repository();
         MessageBroker broker = new MessageBroker(repository);
 
+        broker.createTopic(new FastDeliveryItems(repository));
+        broker.createTopic(new LongDistanceItems(repository));
+
+        Topic fastDeliveryItems = broker.getTopicByName("queue/fast-delivery-items");
+        Topic longDistanceItems = broker.getTopicByName("queue/long-distance-items");
+
         Producer foodDeliveryProducer = new FoodDeliveryProducer(broker, repository);
         Producer fastDeliveryProducer = new FastDeliveryProducer(broker, repository);
         Producer pyMarketPlaceProducer = new PyMarketPlaceProducer(broker, repository);
         Producer physicPersonDeliveryProducer = new PhysicPersonDeliveryProducer(broker, repository);
-
-        Topic fastDeliveryItems = new FastDeliveryItems(repository);
-        Topic longDistanceItems = new LongDistanceItems(repository);
 
         foodDeliveryProducer.addTopic(fastDeliveryItems);
         physicPersonDeliveryProducer.addTopic(fastDeliveryItems);
@@ -37,11 +40,8 @@ public class Main {
         Consumer fastDeliveryItemsConsumer = new FastDeliveryItemsConsumer(fastDeliveryItems, repository);
         Consumer longDistanceItemsConsumer = new LongDistanceItemsConsumer(longDistanceItems, repository);
 
-        fastDeliveryItems.subscribe(fastDeliveryItemsConsumer);
         broker.subscribe(fastDeliveryItems.name(), fastDeliveryItemsConsumer);
-        
-        fastDeliveryItems.subscribe(longDistanceItemsConsumer);
-        broker.subscribe(fastDeliveryItems.name(), longDistanceItemsConsumer);
+        broker.subscribe(longDistanceItems.name(), longDistanceItemsConsumer);
 
         foodDeliveryProducer.sendMessage("Menssagem 1");
 

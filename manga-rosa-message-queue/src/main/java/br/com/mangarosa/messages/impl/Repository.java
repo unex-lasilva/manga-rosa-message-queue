@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import br.com.mangarosa.datastructures.interfaces.Queue;
 import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
+import br.com.mangarosa.datastructures.interfaces.impl.QueueNode;
 import br.com.mangarosa.messages.Message;
 import br.com.mangarosa.messages.interfaces.MessageRepository;
 
@@ -29,11 +31,16 @@ public class Repository implements MessageRepository {
 
     @Override
     public void consumeMessage(String topic, UUID messageId) {
-        if (this.Queues.containsKey(topic) && this.Queues.get(topic).peek().getId() == messageId.toString()) {
-            this.Queues.get(topic).dequeue();
-        } else {
+        if (!this.Queues.containsKey(topic))
             throw new NoSuchElementException("the topic" + topic + "does not exist or the message with messageId"
                     + messageId + "does not exist in the topic either");
+
+        Queue<Message> linkedQueue = this.Queues.get(topic);
+        while (linkedQueue.iterator().hasNext()) {
+            Message message = linkedQueue.iterator().next();
+            if (Objects.equals(message.getId(), messageId.toString())) {
+                message.setConsumed(true);
+            }
         }
 
     }
