@@ -7,8 +7,9 @@ import java.util.concurrent.TimeUnit;
 import br.com.mangarosa.messages.MessageBroker;
 import br.com.mangarosa.messages.impl.Repository;
 import br.com.mangarosa.messages.impl.consumers.FastDeliveryItemsConsumer;
-import br.com.mangarosa.messages.impl.producers.FoodDeliveryProducer;
-import br.com.mangarosa.messages.impl.topics.FastDeliveryItems;
+import br.com.mangarosa.messages.impl.consumers.LongDistanceItemsConsumer;
+import br.com.mangarosa.messages.impl.producers.*;
+import br.com.mangarosa.messages.impl.topics.*;
 import br.com.mangarosa.messages.interfaces.MessageRepository;
 import br.com.mangarosa.messages.interfaces.*;
 
@@ -20,15 +21,27 @@ public class Main {
         MessageBroker broker = new MessageBroker(repository);
 
         Producer foodDeliveryProducer = new FoodDeliveryProducer(broker, repository);
+        Producer fastDeliveryProducer = new FastDeliveryProducer(broker, repository);
+        Producer pyMarketPlaceProducer = new PyMarketPlaceProducer(broker, repository);
+        Producer physicPersonDeliveryProducer = new PhysicPersonDeliveryProducer(broker, repository);
 
         Topic fastDeliveryItems = new FastDeliveryItems(repository);
+        Topic longDistanceItems = new LongDistanceItems(repository);
 
         foodDeliveryProducer.addTopic(fastDeliveryItems);
+        physicPersonDeliveryProducer.addTopic(fastDeliveryItems);
 
-        Consumer fastDeliveryItemsConsumer = new FastDeliveryItemsConsumer();
+        pyMarketPlaceProducer.addTopic(longDistanceItems);
+        fastDeliveryProducer.addTopic(longDistanceItems);
 
-        fastDeliveryItems.subscribe(new FastDeliveryItemsConsumer());
+        Consumer fastDeliveryItemsConsumer = new FastDeliveryItemsConsumer(fastDeliveryItems, repository);
+        Consumer longDistanceItemsConsumer = new LongDistanceItemsConsumer(longDistanceItems, repository);
+
+        fastDeliveryItems.subscribe(fastDeliveryItemsConsumer);
         broker.subscribe(fastDeliveryItems.name(), fastDeliveryItemsConsumer);
+        
+        fastDeliveryItems.subscribe(longDistanceItemsConsumer);
+        broker.subscribe(fastDeliveryItems.name(), longDistanceItemsConsumer);
 
         foodDeliveryProducer.sendMessage("Menssagem 1");
 

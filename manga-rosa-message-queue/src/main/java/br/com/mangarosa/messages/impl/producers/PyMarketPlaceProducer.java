@@ -30,9 +30,9 @@ public class PyMarketPlaceProducer implements Producer {
 
     @Override
     public void sendMessage(String message) {
-        this.message = new Message(this, message);
+        Message newMessage = new Message(this, message);
         this.repository.append(this.topic.name(), this.message);
-        this.broker.notifyConsumers();
+        this.broker.getTopicByName(topic.name()).notifyConsumers(newMessage);
     }
 
     @Override

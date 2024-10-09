@@ -46,7 +46,7 @@ public class Repository implements MessageRepository {
         List<Message> listMessages = Arrays.asList(this.Queues.get(topic).toArray());
         List<Message> listMessagesNotConsumed = new ArrayList<>();
         for (Message message : listMessages) {
-            if (!message.isConsumed()) {
+            if (!message.isConsumed() && !message.isExperied()) {
                 listMessagesNotConsumed.add(message);
             }
         }
@@ -62,7 +62,7 @@ public class Repository implements MessageRepository {
         List<Message> listMessages = Arrays.asList(this.Queues.get(topic).toArray());
         List<Message> listMessagesConsumed = new ArrayList<>();
         for (Message message : listMessages) {
-            if (message.isConsumed()) {
+            if (message.isConsumed() && !message.isExperied()) {
                 listMessagesConsumed.add(message);
             }
         }

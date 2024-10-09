@@ -7,5 +7,4 @@ public class QueueNode<T> {
     public QueueNode(T value) {
         this.value = value;
     }
-
 }

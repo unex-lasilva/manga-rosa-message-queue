@@ -9,7 +9,6 @@ import br.com.mangarosa.messages.interfaces.Topic;
 public class FastDeliveryProducer implements Producer {
     MessageBroker broker;
     MessageRepository repository;
-    Message message;
     Topic topic;
 
     public FastDeliveryProducer(MessageBroker broker, MessageRepository repository) {
@@ -30,9 +29,10 @@ public class FastDeliveryProducer implements Producer {
 
     @Override
     public void sendMessage(String message) {
-        this.message = new Message(this, message);
-        this.repository.append(this.topic.name(), this.message);
+        Message newMessage = new Message(this, message);
+        this.repository.append(this.topic.name(), newMessage);
         this.broker.notifyConsumers();
+        // this.topic.notifyConsumers(newMessage);
     }
 
     @Override
