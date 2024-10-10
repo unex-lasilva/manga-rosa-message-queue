@@ -31,7 +31,7 @@ public class Message implements Serializable, Comparable<Message> {
         setProducer(producer);
         setMessage(message);
         this.createdAt = LocalDateTime.now();
-        this.timeToLive = Duration.ofMinutes(5);
+        this.timeToLive = Duration.ofSeconds(30);
         this.id = createdAt + "-" + UUID.randomUUID().toString();
         this.consumptionList = new ArrayList<>();
     }
@@ -90,7 +90,7 @@ public class Message implements Serializable, Comparable<Message> {
 
         LocalDateTime now = LocalDateTime.now();
 
-        return now.isAfter(this.createdAt.plus(timeToLive));
+        return now.isAfter(this.createdAt.plus(this.timeToLive));
     }
 
     /**

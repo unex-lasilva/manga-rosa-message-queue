@@ -16,8 +16,12 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
         this.head = null;
         this.size = 0;
         this.type = clazz;
-
     }
+
+    /*
+     * Método que adiciona um novo elemento no final da fila;
+     * Caso a fila esteja vazia o elementa será adicionado no primeiro nó;
+     */
 
     @Override
     public void enqueue(T value) {
@@ -36,10 +40,15 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
         this.size++;
     }
 
+    /***
+     * Método que remove o primeiro elemento da fila, caso ela esteja vazia uma
+     * exceção será lançada;
+     */
+
     @Override
     public T dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("A fila está vazia!");
+            throw new IllegalStateException("The queue is empty!");
         } else {
             QueueNode<T> aux = this.head;
             this.head = this.head.next;
@@ -48,17 +57,20 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
         }
     }
 
+    // Método que limpa a fila adicionando null ao ponteiro do primeiro nó;
     @Override
     public void clear() {
         this.head = null;
 
     }
 
+    // Método que verifica se a fila está vazia;
     @Override
     public boolean isEmpty() {
         return this.size == 0;
     }
 
+    // Método que verifica o primeiro elemento da fila, o próximo a ser removido;
     @Override
     public T peek() {
         if (this.isEmpty()) {
@@ -67,11 +79,13 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
         return this.head.value;
     }
 
+    // Método que retorna o tamanho da fila;
     @Override
     public int size() {
         return this.size;
     }
 
+    // Método que retorna um vetor com todos as mensagens da fila;
     @SuppressWarnings("unchecked")
     @Override
     public T[] toArray() {
@@ -93,12 +107,13 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
         }
     }
 
+    // Método que itera sobre os elementos da fila;
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
             QueueNode<T> current = head;
-            
+
             @Override
             public boolean hasNext() {
                 return current != null;
@@ -111,7 +126,7 @@ public class LinkedQueue<T extends Comparable<T>> implements Queue<T> {
                     current = current.next;
                     return value;
                 } else {
-                    throw new NoSuchElementException("Elemento inesistente!");
+                    throw new NoSuchElementException("Non-existent element!");
                 }
             }
         };
