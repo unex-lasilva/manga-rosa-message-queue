@@ -5,16 +5,14 @@ import br.com.mangarosa.messages.interfaces.Producer;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Messagem para ser processada
  */
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
     private String id;
     private Producer producer;
@@ -28,6 +26,7 @@ public class Message implements Serializable {
         setMessage(message);
         this.createdAt = LocalDateTime.now();
         this.consumptionList = new ArrayList<>();
+        this.id = UUID.randomUUID().toString();
     }
 
 
@@ -124,4 +123,20 @@ public class Message implements Serializable {
         }
         return map;
     }
+
+    /**
+     * Verifica se o tempo decorrido desde a criação da mensagem excede 5 minutos.
+     *
+     * @return true se o tempo desde a criação for maior ou igual a 5 minutos, false caso contrário.
+     */
+    public boolean isExpired() {
+        Duration duration = Duration.between(createdAt, LocalDateTime.now());
+        return duration.toMinutes() >= 5;
+    }
+
+    @Override
+    public int compareTo(Message o) {
+        return 0;
+    }
+
 }
