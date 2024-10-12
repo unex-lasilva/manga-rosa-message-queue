@@ -11,7 +11,6 @@ import java.util.Objects;
 
 import br.com.mangarosa.datastructures.interfaces.Queue;
 import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
-import br.com.mangarosa.datastructures.interfaces.impl.QueueNode;
 import br.com.mangarosa.messages.Message;
 import br.com.mangarosa.messages.interfaces.MessageRepository;
 

@@ -44,12 +44,10 @@ public class Main {
         broker.subscribe(fastDeliveryItems.name(), fastDeliveryItemsConsumer);
         broker.subscribe(longDistanceItems.name(), longDistanceItemsConsumer);
 
-        // foodDeliveryProducer.sendMessage("Menssagem 1");
-        fastDeliveryProducer.sendMessage("Menssagem 1");
-        fastDeliveryProducer.sendMessage("Menssagem 2");
+        foodDeliveryProducer.sendMessage("Menssagem 1");
         fastDeliveryProducer.sendMessage("Menssagem 3");
-        // pyMarketPlaceProducer.sendMessage("Menssagem 3");
-        // physicPersonDeliveryProducer.sendMessage("Menssagem 4");
+        pyMarketPlaceProducer.sendMessage("Menssagem 3");
+        physicPersonDeliveryProducer.sendMessage("Menssagem 4");
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
