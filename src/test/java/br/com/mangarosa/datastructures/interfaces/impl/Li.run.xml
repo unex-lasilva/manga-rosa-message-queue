@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Li" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="zulu-17" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="br.com.mangarosa.Main" />
+    <module name="manga-rosa-message-queue" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/manga-rosa-message-queue/src/test/java/br/com/mangarosa/datastructures/interfaces/impl" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
