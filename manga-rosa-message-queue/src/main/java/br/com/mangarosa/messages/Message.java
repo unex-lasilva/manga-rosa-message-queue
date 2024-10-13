@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Messagem para ser processada
  */
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
     private String id;
     private Producer producer;
@@ -124,4 +124,15 @@ public class Message implements Serializable {
         }
         return map;
     }
+
+    @Override
+    public int compareTo(Message o) {
+        return 0;
+    }
+
+    public boolean isExpired() {
+        LocalDateTime now = LocalDateTime.now();
+        return createdAt.plusMinutes(5).isBefore(now);
+    }
+
 }
