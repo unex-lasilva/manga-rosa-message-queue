@@ -9,8 +9,8 @@ public class LongDistanceItemsConsumer implements Consumer{
 
     @Override
     public boolean consume(Message message) {
-        message.setConsumed(true);
-        return message.isConsumed();
+        message.addConsumption(this);
+        return true;
     }
 
     @Override

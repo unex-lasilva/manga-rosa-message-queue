@@ -109,7 +109,7 @@ public class Message implements Serializable, Comparable<Message> {
      */
     public void addConsumption(Consumer consumer){
         if(consumer == null)
-            throw new IllegalArgumentException("Consumer can't be null in a consumptio");
+            throw new IllegalArgumentException("Consumer can't be null in a consumption");
         this.consumptionList.add(new MessageConsumption(consumer));
     }
 
@@ -132,6 +132,6 @@ public class Message implements Serializable, Comparable<Message> {
     }
 
     public boolean isExpired(){
-        return createdAt.plusMinutes(EXPIRATION_TIME).isAfter(LocalDateTime.now());
+        return LocalDateTime.now().isAfter(createdAt.plusMinutes(EXPIRATION_TIME));
     }
 }

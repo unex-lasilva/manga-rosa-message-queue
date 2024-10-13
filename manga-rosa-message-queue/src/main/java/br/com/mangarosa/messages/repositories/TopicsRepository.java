@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class FastDeliveryRepository implements MessageRepository{
+public class TopicsRepository implements MessageRepository{
     private final HashMap<String, HashMap<String, Message>> robsonDB;
 
-    public FastDeliveryRepository() {
+    public TopicsRepository() {
         this.robsonDB = new HashMap<>();
     }
 
@@ -36,11 +36,11 @@ public class FastDeliveryRepository implements MessageRepository{
     @Override
     public List<Message> getAllNotConsumedMessagesByTopic(String topic) {
         if (!robsonDB.containsKey(topic)) {
-            throw new RuntimeException("No such topic " + topic);
+            throw new IllegalArgumentException("No such topic " + topic);
         }
         List<Message> messages = new ArrayList<>();
         for (Message message : robsonDB.get(topic).values()) {
-            if (!message.isConsumed()) {
+            if (!message.isConsumed() && !message.isExpired()) {
                 messages.add(message);
             }
         }
@@ -50,11 +50,11 @@ public class FastDeliveryRepository implements MessageRepository{
     @Override
     public List<Message> getAllConsumedMessagesByTopic(String topic) {
         if (!robsonDB.containsKey(topic)) {
-            throw new RuntimeException("No such topic " + topic);
+            throw new IllegalArgumentException("No such topic " + topic);
         }
         List<Message> messages = new ArrayList<>();
         for (Message message : robsonDB.get(topic).values()) {
-            if (message.isConsumed()) {
+            if (message.isConsumed() && !message.isExpired()) {
                 messages.add(message);
             }
         }
@@ -63,10 +63,10 @@ public class FastDeliveryRepository implements MessageRepository{
 
     private Message getMessage(String topic, String messageId) {
         if (!robsonDB.containsKey(topic)) {
-            throw new RuntimeException("No such topic " + topic);
+            throw new IllegalArgumentException("No such topic " + topic);
         }
         if (!robsonDB.get(topic).containsKey(messageId)) {
-            throw new RuntimeException("No such message " + messageId);
+            throw new IllegalArgumentException("No such message " + messageId);
         }
         return robsonDB.get(topic).get(messageId);
     }

@@ -5,6 +5,7 @@ import br.com.mangarosa.messages.interfaces.Producer;
 import br.com.mangarosa.messages.interfaces.Topic;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class FoodDeliveryProducer implements Producer {
     private final HashMap<String,Topic> topics;
@@ -27,6 +28,7 @@ public class FoodDeliveryProducer implements Producer {
     @Override
     public void sendMessage(String message) {
         Message msg = new Message(this, message);
+        msg.setId(UUID.randomUUID().toString());
         if (topics.containsKey(name())) {
             topics.get(name()).addMessage(msg);
         }

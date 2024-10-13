@@ -8,14 +8,15 @@ import br.com.mangarosa.messages.interfaces.Topic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class FastDeliveryItems implements Topic {
-    private static final String NAME = "queue/fast-delivery-items";
-    private LinkedQueue<Message> queue;
-    private List<Consumer> consumers;
+public class LongDistanceItemsTopic implements Topic {
+    private static final String NAME = "queue/long-distance-items";
+    private final LinkedQueue<Message> queue;
+    private final List<Consumer> consumers;
     private final MessageRepository repository;
 
-    public FastDeliveryItems(MessageRepository repository) {
+    public LongDistanceItemsTopic(MessageRepository repository) {
         this.repository = repository;
         this.queue = new LinkedQueue<Message>();
         this.consumers = new ArrayList<Consumer>();
@@ -49,11 +50,14 @@ public class FastDeliveryItems implements Topic {
 
     @Override
     public MessageRepository getRepository() {
-        return repository;
+        return null;
     }
 
     @Override
     public void notifyConsumers(Message message) {
         Topic.super.notifyConsumers(message);
+        queue.dequeue();
+        repository.consumeMessage(NAME, UUID.fromString(message.getId()));
     }
+
 }
