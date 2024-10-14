@@ -5,6 +5,7 @@ import br.com.mangarosa.messages.interfaces.Producer;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
 /**
  * Messagem para ser processada
  */
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
     private String id;
     private Producer producer;
@@ -30,6 +31,11 @@ public class Message implements Serializable {
         this.consumptionList = new ArrayList<>();
     }
 
+
+    public boolean isExpired() {
+        Duration duration = Duration.between(createdAt, LocalDateTime.now());
+        return duration.toMinutes() >= 5;
+    }
 
     /**
      * Retorna o id da mensagem baseado na data de criação
@@ -123,5 +129,10 @@ public class Message implements Serializable {
             }
         }
         return map;
+    }
+
+    @Override
+    public int compareTo(Message o) {
+        return 0;
     }
 }

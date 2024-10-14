@@ -1,31 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="75400c88-ebd6-4621-bbcd-cc5c49de323a" name="Changes" comment="" />
+    <list default="true" id="75400c88-ebd6-4621-bbcd-cc5c49de323a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/datastructures/interfaces/impl/LinkedQueue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/datastructures/interfaces/impl/QueueNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/fast_delivery_items/FastDeliveryItemTopic.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/fast_delivery_items/consumers/FastDeliveryConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/fast_delivery_items/producers/FoodDeliveryProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/fast_delivery_items/producers/PhysicPersonDeliveryProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/long_distance_items/LongDistanceItems.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/long_distance_items/consumers/LongDistanceConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/long_distance_items/producers/FastDeliveryProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/long_distance_items/producers/PyMarketPlaceProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/repository/MesageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/manga-rosa-message-queue.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/manga-rosa-message-queue.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manga-rosa-message-queue/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/manga-rosa-message-queue/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/interfaces/Topic.java" beforeDir="false" afterPath="$PROJECT_DIR$/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/interfaces/Topic.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;IanSalomao&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/unex-lasilva/manga-rosa-message-queue.git&quot;,
+    &quot;accountId&quot;: &quot;9c12fcdf-c905-4cde-b77d-fe2aa64b923a&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="C:\Users\iansa\apache-maven-3.9.9" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2mRd2cB4AqPs5YoBVDzxAPGAIyR" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "primeiro-projeto-1/ian-salomao-da-silva-carneiro",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/lasilva/Documents/GitHub/manga-rosa-message-queue"
+    "last_opened_file_path": "C:/Users/iansa/Documents/FACULDADE/TERCE5R6 SEMESTRE/ESTRUTURA DE DADOS/PROBLEMA-1/manga-rosa-message-queue/src/main/java/br/com/mangarosa/messages/impl/long_distanceitems",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\iansa\Documents\FACULDADE\TERCE5R6 SEMESTRE\ESTRUTURA DE DADOS\PROBLEMA-1\manga-rosa-message-queue\src\main\java\br\com\mangarosa\messages\impl\long_distanceitems" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="br.com.mangarosa.messages.impl.long_distanceitems.producers" />
+      <recent name="br.com.mangarosa.messages.impl.fast_delivery_items.producers" />
+      <recent name="br.com.mangarosa.messages.impl.fast_delivery_items" />
+      <recent name="br.com.mangarosa.messages.impl" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="br.com.mangarosa.messages.impl.long_distance_items" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -36,5 +111,16 @@
       <updated>1727043116981</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

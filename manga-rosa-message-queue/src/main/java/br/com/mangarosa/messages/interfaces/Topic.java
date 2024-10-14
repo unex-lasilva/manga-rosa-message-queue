@@ -1,9 +1,11 @@
 package br.com.mangarosa.messages.interfaces;
 
+import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
 import br.com.mangarosa.messages.Message;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /***
@@ -51,13 +53,24 @@ public interface Topic extends Serializable {
      * notifica a todos os consumidores que tem uma nova mensagem para ser consumida.
      * @param message mensagem que deve ser notificada
      */
-    default void notifyConsumers(Message message){
+    default void notifyConsumers(Message message, LinkedQueue<Message> messageQueue, MessageRepository repository, String topic){
         consumers().forEach( consumer -> {
             CompletableFuture<Boolean> completableFuture = CompletableFuture
                     .supplyAsync(() -> consumer.consume(message));
-            completableFuture.thenAccept(result ->
-                    System.out.printf("d")
-            );
+            completableFuture.join();
+            completableFuture.thenAccept(result -> {
+                if (result) {
+                    message.setConsumed(true);
+                    repository.consumeMessage(topic, UUID.fromString(message.getId()));
+                    System.out.println("Mensagem consumida com sucesso!");
+                    messageQueue.dequeue();
+                } else {
+                    System.out.println("Falha ao consumir a mensagem.");
+                }
+            }).exceptionally(ex -> {
+                System.out.println("Erro ao consumir a mensagem: " + ex.getMessage());
+                return null;
+            });
         });
 
     }
