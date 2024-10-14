@@ -36,7 +36,7 @@ public class MessageProducer implements Producer {
     @Override
     public void sendMessage(String message) {
         Message newMessage = new Message(this, message);
-        this.repository.append(this.topic.name(), newMessage);
+        this.broker.getTopicByName(this.topic.name()).addMessage(newMessage);
         this.broker.notifyConsumers();
     }
 

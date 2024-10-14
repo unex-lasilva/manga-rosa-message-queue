@@ -26,7 +26,7 @@ public class LongDistanceItems implements Topic {
     /* Adiciona a nova menssagem enviada pelo producer no repositório; */
     @Override
     public void addMessage(Message message) {
-        messageRepository.append(name(), message);
+        messageRepository.append(this.name(), message);
     }
 
     /** Adiciona um consumer na lista de consumers do tópico; */

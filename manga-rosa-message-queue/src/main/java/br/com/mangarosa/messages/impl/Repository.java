@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Iterator;
 
 import br.com.mangarosa.datastructures.interfaces.Queue;
 import br.com.mangarosa.datastructures.interfaces.impl.LinkedQueue;
@@ -17,6 +18,7 @@ import br.com.mangarosa.messages.interfaces.MessageRepository;
 public class Repository implements MessageRepository {
 
     public Map<String, Queue<Message>> Queues = new HashMap<>();
+    public List<Message> messagesConsumed = new ArrayList<>();
 
     @Override
     public void append(String topic, Message message) {
@@ -35,12 +37,12 @@ public class Repository implements MessageRepository {
                     + messageId + "does not exist in the topic either");
 
         Queue<Message> linkedQueue = this.Queues.get(topic);
-        while (linkedQueue.iterator().hasNext()) {
-            Message message = linkedQueue.iterator().next();
-            if (Objects.equals(message.getId(), messageId.toString())) {
-                message.setConsumed(true);
-            }
+        Message message = linkedQueue.dequeue();
+        if (Objects.equals(message.getId(), messageId.toString())) {
+            message.setConsumed(true);
+            this.messagesConsumed.add(message);
         }
+        // List<Message> list = getAllNotConsumedMessagesByTopic(topic);
 
     }
 
@@ -62,18 +64,7 @@ public class Repository implements MessageRepository {
 
     @Override
     public List<Message> getAllConsumedMessagesByTopic(String topic) {
-        if (!this.Queues.containsKey(topic))
-            throw new NoSuchElementException("Key " + topic + " not found in the map.");
-
-        List<Message> listMessages = Arrays.asList(this.Queues.get(topic).toArray());
-        List<Message> listMessagesConsumed = new ArrayList<>();
-        for (Message message : listMessages) {
-            if (message.isConsumed() && !message.isExperied()) {
-                listMessagesConsumed.add(message);
-            }
-        }
-
-        return listMessagesConsumed;
+        return this.messagesConsumed;
     }
 
 }

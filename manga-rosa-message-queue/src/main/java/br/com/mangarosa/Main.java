@@ -46,28 +46,26 @@ public class Main {
                 broker.subscribe(longDistanceItems.name(), longDistanceItemsConsumer);
 
                 foodDeliveryProducer.sendMessage("Menssagem 1");
-                fastDeliveryProducer.sendMessage("Menssagem 3");
-                pyMarketPlaceProducer.sendMessage("Menssagem 3");
-                physicPersonDeliveryProducer.sendMessage("Menssagem 4");
+                foodDeliveryProducer.sendMessage("Menssagem 2");
+                foodDeliveryProducer.sendMessage("Menssagem 3");
+                foodDeliveryProducer.sendMessage("Menssagem 4");
 
-                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+                List<Message> messages = repository.getAllNotConsumedMessagesByTopic(fastDeliveryItems.name());
 
-                Runnable tarefa = new Runnable() {
-                        public void run() {
-                                int i = 0;
-                                List<Message> list = repository
-                                                .getAllNotConsumedMessagesByTopic(fastDeliveryItems.name());
-                                System.out.println("Message not consumed: \n");
-                                while (i < list.size()) {
-                                        System.out.println(
-                                                        "Message: " + list.get(i).getMessage() + " IsExperied: "
-                                                                        + list.get(i).isExperied());
-                                        i++;
-                                }
+                for (Message message : messages) {
+                        System.out.println("\n" + message.getMessage() + message.isConsumed());
+                }
+                for (Message message : messages) {
+                        fastDeliveryItemsConsumer.consume(message);
+                }
 
-                        };
+                List<Message> messages2 = repository.getAllConsumedMessagesByTopic(fastDeliveryItems.name());
 
-                };
-                scheduler.scheduleAtFixedRate(tarefa, 0, 15, TimeUnit.SECONDS);
+                for (Message message : messages2) {
+                        System.out.println("\n" + message.getMessage() + message.isConsumed());
+                }
+
+        
+
         }
 }

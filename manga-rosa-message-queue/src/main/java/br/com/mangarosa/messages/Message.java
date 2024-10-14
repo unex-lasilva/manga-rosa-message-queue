@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Message implements Serializable, Comparable<Message> {
         setMessage(message);
         this.createdAt = LocalDateTime.now();
         this.timeToLive = Duration.ofSeconds(30);
-        this.id = createdAt + "-" + UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.consumptionList = new ArrayList<>();
     }
 
