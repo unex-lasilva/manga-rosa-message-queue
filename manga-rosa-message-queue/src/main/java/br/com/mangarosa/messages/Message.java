@@ -22,6 +22,7 @@ public class Message implements Serializable {
     private final List<MessageConsumption> consumptionList;
     private boolean isConsumed;
     private String message;
+    private final static long EXPIRATION_TIME_MINUTES = 5; // tempo de expiração em minutos
 
     public Message(Producer producer, String message){
         setProducer(producer);
@@ -79,10 +80,19 @@ public class Message implements Serializable {
         return isConsumed;
     }
 
+    public boolean isExpired() {
+        LocalDateTime expirationTime = createdAt.plusMinutes(EXPIRATION_TIME_MINUTES);
+        return LocalDateTime.now().isAfter(expirationTime);
+    }
+
+
     /**
      * Informa que a mensagem foi consumida
      * @param consumed se foi consumido
      */
+
+
+
     public void setConsumed(boolean consumed) {
         isConsumed = consumed;
     }
@@ -101,6 +111,7 @@ public class Message implements Serializable {
         this.message = message;
 
     }
+
 
     /**
      * Adiciona o consumo da mensagem
