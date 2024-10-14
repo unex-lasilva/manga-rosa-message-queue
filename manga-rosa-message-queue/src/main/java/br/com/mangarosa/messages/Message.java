@@ -5,6 +5,7 @@ import br.com.mangarosa.messages.interfaces.Producer;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,12 @@ public class Message implements Serializable {
     private boolean isConsumed;
     private String message;
 
+    /**
+    Declarando a duração que quero/ foi solicitada
+     */
+    private final Duration TimeDuracao = Duration.ofMinutes(5);
+
+
     public Message(Producer producer, String message){
         setProducer(producer);
         setMessage(message);
@@ -30,6 +37,13 @@ public class Message implements Serializable {
         this.consumptionList = new ArrayList<>();
     }
 
+    /**
+    E aqui estou definindo o tempo de expiração de acordo com o tempo limite que escolhi anteriormente
+     */
+    public boolean isExpired() {
+        LocalDateTime tempoExpirar = createdAt.plus(TimeDuracao);
+        return LocalDateTime.now().isAfter(tempoExpirar);
+    }
 
     /**
      * Retorna o id da mensagem baseado na data de criação
@@ -101,6 +115,8 @@ public class Message implements Serializable {
         this.message = message;
 
     }
+
+
 
     /**
      * Adiciona o consumo da mensagem
