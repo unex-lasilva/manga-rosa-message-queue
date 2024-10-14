@@ -124,7 +124,25 @@ public class Message implements Serializable {
         }
         return map;
     }
-    public boolean isExperied() {
-        return this.createdAt.isBefore(LocalDateTime.now().minusMinutes(5L));
+
+    /**
+     * Verifica se o tempo de expiração foi atingido.
+     *
+     * O método compara o horário atual com o horário de expiração, que é calculado
+     * adicionando 5 minutos ao momento em que o objeto foi criado (variável `createdAt`).
+     * Se o horário atual for posterior ao horário de expiração, considera-se que o tempo
+     * de expiração foi atingido e o método retorna `true`.
+     *
+     * @return `true` se o tempo de expiração foi atingido, `false` caso contrário.
+     */
+    public boolean isExperied(){
+        // Define o tempo de expiração em minutos
+        final long EXPIRATION_TIME_MINUTES = 5;
+
+        // Calcula o horário de expiração somando o tempo de expiração ao horário de criação
+        LocalDateTime expirationTime = createdAt.plusMinutes(EXPIRATION_TIME_MINUTES);
+
+        // Retorna verdadeiro se o horário atual for posterior ao horário de expiração
+        return LocalDateTime.now().isAfter(expirationTime);
     }
 }
