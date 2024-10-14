@@ -1,60 +1,59 @@
 package br.com.mangarosa;
 
-import br.com.mangarosa.messages.MessageBroker;
 import br.com.mangarosa.messages.Message;
+import br.com.mangarosa.messages.MessageBroker;
 import br.com.mangarosa.messages.interfaces.*;
+import br.com.mangarosa.messages.interfaces.MsgRepositoryImpl;
+import br.com.mangarosa.messages.interfaces.consumersImpl.FastDeliveryItemsConsumer;
+import br.com.mangarosa.messages.interfaces.consumersImpl.LongDistanceItemsConsumer;
+import br.com.mangarosa.messages.interfaces.producersImpl.FastDeliveryProducer;
+import br.com.mangarosa.messages.interfaces.producersImpl.FoodDeliveryProducer;
+import br.com.mangarosa.messages.interfaces.producersImpl.PhysicPersonDeliveryProducer;
+import br.com.mangarosa.messages.interfaces.producersImpl.PyMarketPlaceProducer;
+import br.com.mangarosa.messages.interfaces.topicImpl.FastDeliveryItems;
+import br.com.mangarosa.messages.interfaces.topicImpl.LongDistanceItems;
+
 import java.util.List;
 
 public class Main {
-
     public static MessageRepository repository;
     public static MessageBroker messageBroker;
-
     public static Topic fastDeliveryItems;
     public static Topic longDistanceItems;
-
     public static Producer foodDeliveryProducer;
     public static Producer physicPersonDeliveryProducer;
     public static Producer pyMarketPlaceProducer;
     public static Producer fastDeliveryProducer;
-
     public static Consumer fastDeliveryItemsConsumer;
     public static Consumer longDistanceItemsConsumer;
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws InterruptedException {
         repository = new MsgRepositoryImpl();
         messageBroker = new MessageBroker(repository);
 
-        // Criar tópicos
+        // Criar e registrar tópicos no MessageBroker
+        fastDeliveryItems = new FastDeliveryItems((MsgRepositoryImpl) repository);
+        longDistanceItems = new LongDistanceItems((MsgRepositoryImpl) repository);
 
-        fastDeliveryItems = new TopicImpl("fast-delivery-items", (MsgRepositoryImpl) repository);
-        longDistanceItems = new TopicImpl("long-distance-items", (MsgRepositoryImpl) repository);
+        // Adicionar tópicos ao MessageBroker
+        messageBroker.createTopic(fastDeliveryItems);
+        messageBroker.createTopic(longDistanceItems);
 
         // Criar produtores
-
-        foodDeliveryProducer = new ProducerImpl("FoodDeliveryProducer", messageBroker, fastDeliveryItems.name());
-        physicPersonDeliveryProducer = new ProducerImpl("PhysicPersonDeliveryProducer", messageBroker, fastDeliveryItems.name());
-        pyMarketPlaceProducer = new ProducerImpl("PyMarketPlaceProducer", messageBroker, longDistanceItems.name());
-        fastDeliveryProducer = new ProducerImpl("FastDeliveryProducer", messageBroker, longDistanceItems.name());
+        foodDeliveryProducer = new FoodDeliveryProducer(messageBroker);
+        physicPersonDeliveryProducer = new PhysicPersonDeliveryProducer(messageBroker);
+        pyMarketPlaceProducer = new PyMarketPlaceProducer(messageBroker);
+        fastDeliveryProducer = new FastDeliveryProducer(messageBroker);
 
         // Criar consumidores
-
-        fastDeliveryItemsConsumer = new ConsumerImpl("FastDeliveryItemsConsumer", fastDeliveryItems.name(), (MsgRepositoryImpl) repository);
-        longDistanceItemsConsumer = new ConsumerImpl("LongDistanceItemsConsumer", longDistanceItems.name(), (MsgRepositoryImpl) repository);
-
-        // Adicionar tópicos ao message broker
-
-        foodDeliveryProducer.addTopic(fastDeliveryItems);
-        pyMarketPlaceProducer.addTopic(longDistanceItems);
+        fastDeliveryItemsConsumer = new FastDeliveryItemsConsumer((MsgRepositoryImpl) repository);
+        longDistanceItemsConsumer = new LongDistanceItemsConsumer((MsgRepositoryImpl) repository);
 
         // Subscrever consumidores aos tópicos
-
         messageBroker.subscribe(fastDeliveryItems.name(), fastDeliveryItemsConsumer);
         messageBroker.subscribe(longDistanceItems.name(), longDistanceItemsConsumer);
 
         // Produzir mensagens de exemplo
-
         produceMessages();
 
         // Verificar mensagens armazenadas
@@ -62,7 +61,6 @@ public class Main {
     }
 
     // Método para produzir mensagens de exemplo
-
     private static void produceMessages() {
         Message msg1 = new Message(foodDeliveryProducer, "Order #1001: Deliver food to customer A");
         Message msg2 = new Message(physicPersonDeliveryProducer, "Order #1002: Deliver documents to client B");
@@ -85,7 +83,6 @@ public class Main {
     }
 
     // Método para verificar as mensagens armazenadas
-
     private static void verifyStoredMessages() {
         List<Message> fastDeliveryMessages = repository.getAllNotConsumedMessagesByTopic(fastDeliveryItems.name());
         List<Message> longDistanceMessages = repository.getAllNotConsumedMessagesByTopic(longDistanceItems.name());
@@ -101,8 +98,7 @@ public class Main {
         }
     }
 
-    /// Método para formatar a mensagem de forma legível
-
+    // Método para formatar a mensagem de forma legível
     private static String formatMessage(Message message) {
         return String.format("ID: %s | Producer: %s | Created At: %s | Message: %s | Consumed: %s",
                 message.getId(),
