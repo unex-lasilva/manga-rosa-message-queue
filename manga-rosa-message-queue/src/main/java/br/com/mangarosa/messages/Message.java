@@ -124,7 +124,4 @@ public class Message implements Serializable {
         }
         return map;
     }
-    public boolean isExperied() {
-        return this.createdAt.isBefore(LocalDateTime.now().minusMinutes(5L));
-    }
 }
