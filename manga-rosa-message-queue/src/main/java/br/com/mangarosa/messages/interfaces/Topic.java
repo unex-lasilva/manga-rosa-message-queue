@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
  * Tópico é uma estrutura de fila onde as mensagens ficam para serem consumidas
  * pelos consumidores.
  */
-public interface Topic extends Serializable {
+public interface Topic extends Serializable, Comparable<Topic> {
     /***
      * Retorna o nome do tópico
      * @return topic name
