@@ -14,8 +14,9 @@ import java.util.Map;
 /**
  * Messagem para ser processada
  */
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
+    private static final int EXPIRATION_TIME = 5;
     private String id;
     private Producer producer;
     private final LocalDateTime createdAt;
@@ -108,7 +109,7 @@ public class Message implements Serializable {
      */
     public void addConsumption(Consumer consumer){
         if(consumer == null)
-            throw new IllegalArgumentException("Consumer can't be null in a consumptio");
+            throw new IllegalArgumentException("Consumer can't be null in a consumption");
         this.consumptionList.add(new MessageConsumption(consumer));
     }
 
@@ -123,5 +124,14 @@ public class Message implements Serializable {
             }
         }
         return map;
+    }
+
+    @Override
+    public int compareTo(Message o) {
+        return 0;
+    }
+
+    public boolean isExpired(){
+        return LocalDateTime.now().isAfter(createdAt.plusMinutes(EXPIRATION_TIME));
     }
 }

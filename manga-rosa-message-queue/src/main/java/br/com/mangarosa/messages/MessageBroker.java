@@ -66,11 +66,13 @@ public class MessageBroker {
                         .getAllNotConsumedMessagesByTopic(key);
 
                 if(Objects.nonNull(messages)){
-
+                    for (Message message : messages){
+                        topics.get(key).notifyConsumers(message);
+                    }
                 }
             });
         };
         ScheduledFuture<?> scheduledFuture = scheduleAtFixedRate
-                .scheduleAtFixedRate(notifyTask, 2, 1, TimeUnit.MINUTES);
+                .scheduleAtFixedRate(notifyTask, 1, 1, TimeUnit.MINUTES);
     }
 }
